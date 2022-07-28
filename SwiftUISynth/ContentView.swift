@@ -10,24 +10,32 @@ struct ContentView: View {
 
             Spacer()
 
-            HStack(spacing: 2) {
-                ForEach(viewModel.midiNotes, id: \.self) { note in
-                    RoundedRectangle(cornerRadius: 8)
-                        .foregroundColor(viewModel.playedNote == note ? .orange : .blue)
-                        .gesture(
-                            DragGesture(minimumDistance: 0)
-                                .onChanged({ _ in
-                                    viewModel.playedNote = note
-                                })
-                                .onEnded({ _ in
-                                    viewModel.playedNote = nil
-                                })
-                        )
-                }
-            }
-            .frame(maxHeight: 300)
-            .padding(4)
+            keys
+                .frame(maxHeight: 300)
+                .padding(4)
         }
+    }
+
+    private var keys: some View {
+        HStack(spacing: 2) {
+            ForEach(viewModel.midiNotes, id: \.self) { key(for: $0) }
+        }
+    }
+
+    private func key(for note: Int) -> some View {
+        RoundedRectangle(cornerRadius: 8)
+            .foregroundColor(viewModel.playedNote == note ? .orange : .blue)
+            .gesture(dragGesture(for: note))
+    }
+
+    private func dragGesture(for note: Int) -> some Gesture {
+        DragGesture(minimumDistance: 0)
+            .onChanged({ _ in
+                viewModel.playedNote = note
+            })
+            .onEnded({ _ in
+                viewModel.playedNote = nil
+            })
     }
 }
 
