@@ -8,6 +8,8 @@ struct ContentView: View {
             Text("🤪🤪🤪🤪")
                 .font(.largeTitle)
 
+            waveformPicker
+
             Stepper("Octave: \(viewModel.octaveOffset)", value: $viewModel.octaveOffset, in: -2...2)
                 .padding()
 
@@ -17,6 +19,16 @@ struct ContentView: View {
                 .frame(maxHeight: 300)
                 .padding(4)
         }
+    }
+
+    private var waveformPicker: some View {
+        Picker("Waveform", selection: $viewModel.waveform) {
+            ForEach(Waveform.allCases) { waveform in
+                Text(waveform.text)
+            }
+        }
+        .pickerStyle(.segmented)
+        .padding()
     }
 
     private var keys: some View {
@@ -42,6 +54,17 @@ struct ContentView: View {
     }
 }
 
+extension Waveform {
+    var text: String {
+        switch self {
+        case .sine: return "Sine"
+        case .triangle: return "Triangle"
+        case .sawtooth: return "Sawtooth"
+        case .square: return "Square"
+        }
+    }
+}
+
 extension ContentView {
     class ViewModel: ObservableObject {
         @Published var playedNote: Int? {
@@ -50,6 +73,7 @@ extension ContentView {
         @Published var octaveOffset: Int = 0 {
             didSet { synth.octaveOffset = octaveOffset }
         }
+        @Published var waveform = Waveform.sine
         @Published var midiNotes = [60, 62, 65, 67, 69, 70, 72]
 
         var synth: SynthProtocol

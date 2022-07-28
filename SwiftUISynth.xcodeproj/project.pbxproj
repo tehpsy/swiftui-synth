@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		7759F02B289273C000DEFF66 /* Oscillator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7759F02A289273C000DEFF66 /* Oscillator.swift */; };
 		7759F02D289274B600DEFF66 /* Synth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7759F02C289274B600DEFF66 /* Synth.swift */; };
+		7759F02F2892899F00DEFF66 /* Waveform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7759F02E2892899F00DEFF66 /* Waveform.swift */; };
 		77B788A7288D1F6300C7A481 /* SwiftUISynthApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B788A6288D1F6300C7A481 /* SwiftUISynthApp.swift */; };
 		77B788A9288D1F6300C7A481 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B788A8288D1F6300C7A481 /* ContentView.swift */; };
 		77B788AB288D1F6400C7A481 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 77B788AA288D1F6400C7A481 /* Assets.xcassets */; };
@@ -18,6 +19,7 @@
 /* Begin PBXFileReference section */
 		7759F02A289273C000DEFF66 /* Oscillator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Oscillator.swift; sourceTree = "<group>"; };
 		7759F02C289274B600DEFF66 /* Synth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Synth.swift; sourceTree = "<group>"; };
+		7759F02E2892899F00DEFF66 /* Waveform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Waveform.swift; sourceTree = "<group>"; };
 		77B788A3288D1F6300C7A481 /* SwiftUISynth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftUISynth.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		77B788A6288D1F6300C7A481 /* SwiftUISynthApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUISynthApp.swift; sourceTree = "<group>"; };
 		77B788A8288D1F6300C7A481 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -57,6 +59,7 @@
 			children = (
 				77B788A6288D1F6300C7A481 /* SwiftUISynthApp.swift */,
 				77B788A8288D1F6300C7A481 /* ContentView.swift */,
+				7759F02E2892899F00DEFF66 /* Waveform.swift */,
 				77B788AA288D1F6400C7A481 /* Assets.xcassets */,
 				77B788AC288D1F6400C7A481 /* Preview Content */,
 				7759F02A289273C000DEFF66 /* Oscillator.swift */,
@@ -143,6 +146,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7759F02F2892899F00DEFF66 /* Waveform.swift in Sources */,
 				7759F02D289274B600DEFF66 /* Synth.swift in Sources */,
 				7759F02B289273C000DEFF66 /* Oscillator.swift in Sources */,
 				77B788A9288D1F6300C7A481 /* ContentView.swift in Sources */,
