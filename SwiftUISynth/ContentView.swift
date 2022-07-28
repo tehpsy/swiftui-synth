@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject var viewModel = ViewModel()
+    @StateObject var viewModel: ViewModel
 
     var body: some View {
         VStack {
@@ -43,15 +43,24 @@ extension ContentView {
     class ViewModel: ObservableObject {
         @Published var playedNote: Int?
         @Published var midiNotes = [60, 62, 65, 67, 69, 70, 72]
+
+        var synth: SynthProtocol
+        init(synth: SynthProtocol) {
+            self.synth = synth
+            self.playedNote = nil
+        }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
+    class SynthStub: SynthProtocol {
+    }
+
     static var previews: some View {
-        ContentView()
+        ContentView(viewModel: ContentView.ViewModel(synth: SynthStub()))
             .preferredColorScheme(.dark)
             .previewDevice(PreviewDevice(rawValue: "iPhone 13"))
-        ContentView()
+        ContentView(viewModel: ContentView.ViewModel(synth: SynthStub()))
             .preferredColorScheme(.light)
             .previewDevice(PreviewDevice(rawValue: "iPhone SE (2nd generation)"))
     }

@@ -1,7 +1,10 @@
 import AVFoundation
 import Foundation
 
-class Synth {
+protocol SynthProtocol {
+}
+
+class Synth: SynthProtocol {
     private let audioEngine = AVAudioEngine()
     private let frequency = Oscillator.frequency
     private var time = Float(0)

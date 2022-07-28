@@ -11,7 +11,7 @@ import SwiftUI
 struct SwiftUISynthApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(viewModel: ContentView.ViewModel(synth: Synth()))
         }
     }
 }
