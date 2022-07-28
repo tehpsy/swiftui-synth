@@ -3,6 +3,7 @@ import Foundation
 
 protocol SynthProtocol {
     var playedNote: Int? { get set }
+    var octaveOffset: Int { get set }
 }
 
 class Synth: SynthProtocol {
@@ -13,6 +14,9 @@ class Synth: SynthProtocol {
     private let deltaTime: Float
     private var signal = Oscillator.sine
     var playedNote: Int? {
+        didSet { update() }
+    }
+    var octaveOffset = 0 {
         didSet { update() }
     }
 
@@ -56,7 +60,7 @@ class Synth: SynthProtocol {
 
     private func update() {
         if let playedNote = playedNote {
-            frequency = 400 * pow(2.0, (Float(playedNote) - 69.0) / 12.0)
+            frequency = 400 * pow(2.0, (Float(playedNote + 12 * octaveOffset) - 69.0) / 12.0)
             audioEngine.mainMixerNode.outputVolume = 1
         } else {
             audioEngine.mainMixerNode.outputVolume = 0
