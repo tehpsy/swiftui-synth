@@ -2,15 +2,19 @@ import AVFoundation
 import Foundation
 
 protocol SynthProtocol {
+    var playedNote: Int? { get set }
 }
 
 class Synth: SynthProtocol {
     private let audioEngine = AVAudioEngine()
-    private let frequency = Oscillator.frequency
+    private var frequency = Oscillator.frequency
     private var time = Float(0)
     private let sampleRate: Double
     private let deltaTime: Float
     private var signal = Oscillator.sine
+    var playedNote: Int? {
+        didSet { update() }
+    }
 
     private lazy var sourceNode = AVAudioSourceNode { (_, _, frameCount, audioBufferList) -> OSStatus in
         let ablPointer = UnsafeMutableAudioBufferListPointer(audioBufferList)
@@ -45,6 +49,17 @@ class Synth: SynthProtocol {
         audioEngine.connect(sourceNode, to: mainMixer, format: inputFormat)
         audioEngine.connect(mainMixer, to: outputNode, format: nil)
 
+        update()
+
         try! audioEngine.start()
+    }
+
+    private func update() {
+        if let playedNote = playedNote {
+            frequency = 400 * pow(2.0, (Float(playedNote) - 69.0) / 12.0)
+            audioEngine.mainMixerNode.outputVolume = 1
+        } else {
+            audioEngine.mainMixerNode.outputVolume = 0
+        }
     }
 }

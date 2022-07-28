@@ -41,7 +41,9 @@ struct ContentView: View {
 
 extension ContentView {
     class ViewModel: ObservableObject {
-        @Published var playedNote: Int?
+        @Published var playedNote: Int? {
+            didSet { synth.playedNote = playedNote }
+        }
         @Published var midiNotes = [60, 62, 65, 67, 69, 70, 72]
 
         var synth: SynthProtocol
@@ -54,6 +56,7 @@ extension ContentView {
 
 struct ContentView_Previews: PreviewProvider {
     class SynthStub: SynthProtocol {
+        var playedNote: Int?
     }
 
     static var previews: some View {
