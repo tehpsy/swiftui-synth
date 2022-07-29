@@ -5,6 +5,7 @@ protocol SynthProtocol {
     var playedNote: Int? { get set }
     var octaveOffset: Int { get set }
     var waveform: Waveform { get set }
+    var volume: Float { get set }
 }
 
 class Synth: SynthProtocol {
@@ -18,6 +19,9 @@ class Synth: SynthProtocol {
         didSet { update() }
     }
     var octaveOffset = 0 {
+        didSet { update() }
+    }
+    var volume: Float = 0 {
         didSet { update() }
     }
     var waveform = Waveform.sine
@@ -63,7 +67,7 @@ class Synth: SynthProtocol {
     private func update() {
         if let playedNote = playedNote {
             frequency = 400 * pow(2.0, (Float(playedNote + 12 * octaveOffset) - 69.0) / 12.0)
-            audioEngine.mainMixerNode.outputVolume = 1
+            audioEngine.mainMixerNode.outputVolume = volume
         } else {
             audioEngine.mainMixerNode.outputVolume = 0
         }

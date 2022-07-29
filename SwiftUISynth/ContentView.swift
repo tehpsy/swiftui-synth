@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject var viewModel: ViewModel
+    private let keyHeight: CGFloat = 300
 
     var body: some View {
         VStack {
@@ -13,10 +14,13 @@ struct ContentView: View {
             Stepper("Octave: \(viewModel.octaveOffset)", value: $viewModel.octaveOffset, in: -2...2)
                 .padding()
 
+            Toggle("Enable Velocity", isOn: $viewModel.velocityEnabled)
+                .padding()
+
             Spacer()
 
             keys
-                .frame(maxHeight: 300)
+                .frame(height: 300)
                 .padding(4)
         }
     }
@@ -45,8 +49,9 @@ struct ContentView: View {
 
     private func dragGesture(for note: Int) -> some Gesture {
         DragGesture(minimumDistance: 0)
-            .onChanged({ _ in
+            .onChanged({ gesture in
                 viewModel.playedNote = note
+                viewModel.volume = 1 - Float(gesture.location.y / keyHeight)
             })
             .onEnded({ _ in
                 viewModel.playedNote = nil
@@ -76,12 +81,22 @@ extension ContentView {
         @Published var waveform = Waveform.sine {
             didSet { synth.waveform = waveform }
         }
+        @Published var velocityEnabled = false {
+            didSet { updateVolume() }
+        }
+        @Published var volume: Float = 0 {
+            didSet { updateVolume() }
+        }
         @Published var midiNotes = [60, 62, 65, 67, 69, 70, 72]
 
         var synth: SynthProtocol
         init(synth: SynthProtocol) {
             self.synth = synth
             self.playedNote = nil
+        }
+
+        private func updateVolume() {
+            synth.volume = velocityEnabled ? volume : 1
         }
     }
 }
@@ -91,6 +106,7 @@ struct ContentView_Previews: PreviewProvider {
         var playedNote: Int?
         var octaveOffset = 0
         var waveform = Waveform.sine
+        var volume: Float = 0
     }
 
     static var previews: some View {
