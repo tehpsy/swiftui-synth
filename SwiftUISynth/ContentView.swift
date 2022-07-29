@@ -6,16 +6,14 @@ struct ContentView: View {
 
     var body: some View {
         VStack {
-            Text("🤪🤪🤪🤪")
-                .font(.largeTitle)
+            title
 
-            waveformPicker
-
-            Stepper("Octave: \(viewModel.octaveOffset)", value: $viewModel.octaveOffset, in: -2...2)
-                .padding()
-
-            Toggle("Enable Velocity", isOn: $viewModel.velocityEnabled)
-                .padding()
+            Group {
+                waveformPicker
+                octaveStepper
+                velocityToggle
+            }
+            .padding()
 
             Spacer()
 
@@ -25,6 +23,11 @@ struct ContentView: View {
         }
     }
 
+    private var title: some View {
+        Text("🤪🤪🤪🤪")
+            .font(.largeTitle)
+    }
+
     private var waveformPicker: some View {
         Picker("Waveform", selection: $viewModel.waveform) {
             ForEach(Waveform.allCases) { waveform in
@@ -32,7 +35,14 @@ struct ContentView: View {
             }
         }
         .pickerStyle(.segmented)
-        .padding()
+    }
+
+    private var octaveStepper: some View {
+        Stepper("Octave: \(viewModel.octaveOffset)", value: $viewModel.octaveOffset, in: -2...2)
+    }
+
+    private var velocityToggle: some View {
+        Toggle("Enable Velocity", isOn: $viewModel.velocityEnabled)
     }
 
     private var keys: some View {
