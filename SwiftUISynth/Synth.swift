@@ -4,6 +4,7 @@ import Foundation
 protocol SynthProtocol {
     var playedNote: Int? { get set }
     var octaveOffset: Int { get set }
+    var waveform: Waveform { get set }
 }
 
 class Synth: SynthProtocol {
@@ -12,13 +13,14 @@ class Synth: SynthProtocol {
     private var time = Float(0)
     private let sampleRate: Double
     private let deltaTime: Float
-    private var signal = Oscillator.sine
+    private var signal: Signal { waveform.signal }
     var playedNote: Int? {
         didSet { update() }
     }
     var octaveOffset = 0 {
         didSet { update() }
     }
+    var waveform = Waveform.sine
 
     private lazy var sourceNode = AVAudioSourceNode { (_, _, frameCount, audioBufferList) -> OSStatus in
         let ablPointer = UnsafeMutableAudioBufferListPointer(audioBufferList)

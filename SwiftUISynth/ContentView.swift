@@ -73,7 +73,9 @@ extension ContentView {
         @Published var octaveOffset: Int = 0 {
             didSet { synth.octaveOffset = octaveOffset }
         }
-        @Published var waveform = Waveform.sine
+        @Published var waveform = Waveform.sine {
+            didSet { synth.waveform = waveform }
+        }
         @Published var midiNotes = [60, 62, 65, 67, 69, 70, 72]
 
         var synth: SynthProtocol
@@ -88,6 +90,7 @@ struct ContentView_Previews: PreviewProvider {
     class SynthStub: SynthProtocol {
         var playedNote: Int?
         var octaveOffset = 0
+        var waveform = Waveform.sine
     }
 
     static var previews: some View {
