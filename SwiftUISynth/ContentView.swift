@@ -8,14 +8,14 @@ struct ContentView: View {
         VStack {
             title
 
-            Group {
-                waveformPicker
-                octaveStepper
-                velocityToggle
+            ScrollView {
+                VStack(spacing: 30) {
+                    waveformPicker
+                    octaveStepper
+                    velocityToggle
+                }
             }
             .padding()
-
-            Spacer()
 
             keys
                 .frame(height: 300)
